@@ -17,6 +17,8 @@ public class BloggingApplication {
 		System.out.println("byyyyyyyyyyyy");
 		System.out.println("hello");
 		System.out.println("kiikkgkgkkkg");
+		
+		
 	}
 
 	@Bean
@@ -24,4 +26,9 @@ public class BloggingApplication {
 		return new ModelMapper();
 	}
 
+	
+	public void display() {
+		
+		System.out.println("HI i am  here ");
+	}
 }
