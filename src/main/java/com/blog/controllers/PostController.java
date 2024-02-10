@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog.constant.BlogConstant;
 import com.blog.payloads.PostDto;
+import com.blog.payloads.PostResponse;
 import com.blog.services.PostService;
 
 @RestController
@@ -46,17 +49,29 @@ public class PostController {
 		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/posts")
-	public ResponseEntity<List<PostDto>> getAllPosts(){
-		List<PostDto> allPost = this.postService.getAllPost();
-		return new ResponseEntity<List<PostDto>>(allPost,HttpStatus.OK);
-		
+	public ResponseEntity<PostResponse> getAllPosts(
+			@RequestParam(value = "pageNumber", defaultValue = BlogConstant.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = BlogConstant.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(value = "sortBy", defaultValue = BlogConstant.SORT_BY, required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = BlogConstant.SORT_DIR, required = false) String sortDir) {
+		PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize, sortBy, sortDir);
+		return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
+
 	}
-	
+
 	@GetMapping("/post/{postId}")
-	public ResponseEntity<List<PostDto>> getPostById(@PathVariable Integer postId){
+	public ResponseEntity<List<PostDto>> getPostById(@PathVariable Integer postId) {
 		List<PostDto> postById = this.postService.getPostById(postId);
-		return new ResponseEntity<List<PostDto>>(postById,HttpStatus.OK);
+		return new ResponseEntity<List<PostDto>>(postById, HttpStatus.OK);
 	}
+
+	@GetMapping("/posts/search/{keywords}")
+	public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keywords) {
+		List<PostDto> fethchedPost = this.postService.searchPosts(keywords);
+		return new ResponseEntity<List<PostDto>>(fethchedPost, HttpStatus.OK);
+
+	}
+
 }

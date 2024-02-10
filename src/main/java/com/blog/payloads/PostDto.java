@@ -3,7 +3,8 @@ package com.blog.payloads;
 import java.sql.Timestamp;
 
 public class PostDto {
-
+    
+	private Integer postId;
 	private String title;
 	private String content;
 	private String imageName;
@@ -13,9 +14,10 @@ public class PostDto {
 
 	private UserDto userDto;
 
-	public PostDto(String title, String content, String imageName, Timestamp addedDate, CategoryDto categoryDto,
-			UserDto userDto) {
+	public PostDto(Integer postId, String title, String content, String imageName, Timestamp addedDate,
+			CategoryDto categoryDto, UserDto userDto) {
 		super();
+		this.postId = postId;
 		this.title = title;
 		this.content = content;
 		this.imageName = imageName;
@@ -27,6 +29,14 @@ public class PostDto {
 	public PostDto() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Integer getPostId() {
+		return postId;
+	}
+
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 
 	public String getTitle() {
@@ -77,13 +87,6 @@ public class PostDto {
 		this.userDto = userDto;
 	}
 
-	@Override
-	public String toString() {
-		return "PostDto [title=" + title + ", content=" + content + ", imageName=" + imageName + ", addedDate="
-				+ addedDate + ", categoryDto=" + categoryDto + ", userDto=" + userDto + "]";
-	}
 	
-	
-
 	
 }
